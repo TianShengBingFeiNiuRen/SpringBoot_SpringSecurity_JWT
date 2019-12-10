@@ -36,7 +36,7 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
     private UrlLogoutSuccessHandler logoutSuccessHandler; //自定义注销成功处理器
 
     @Resource
-    private UrlAccessDeniedHandler accessDeniedHandler; //自定义无权访问处理
+    private UrlAccessDeniedHandler accessDeniedHandler; //自定义无权访问处理器
 
     @Resource
     private SelfAuthenticationProvider authenticationProvider; //自定义登录认证
