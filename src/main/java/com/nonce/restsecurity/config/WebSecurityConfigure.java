@@ -86,7 +86,7 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
                     }
                 });
 
-        // 将session策略设置为无状态的,通过token进行权限认真
+        // 将session策略设置为无状态的,通过token进行权限认证
 //        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         // 开启自动配置的登录功能
