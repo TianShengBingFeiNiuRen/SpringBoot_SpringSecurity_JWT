@@ -1,27 +1,37 @@
-# Spring Security
+# SpringBoot整合SpringSecurity+JWT实现单点的登录
 
-> 	Spring Security是一个功能强大且可高度自定义的身份验证和访问控制框架。它是保护基于Spring的应用程序的事实上的标准。
+**一、JSON Web Token（JWT）**
+> 官方解释：JSON Web Token（JWT）是一个开放标准（RFC 7519），它定义了一种紧凑且自包含的方式，用于在各方之间作为JSON对象安全地传输信息。由于此信息是经过数字签名的，因此可以被验证和信任。可以使用秘密（使用HMAC算法）或使用RSA或ECDSA的公钥/私钥对对JWT进行签名。
 
-> 	Spring Security是一个专注于为Java应用程序提供身份验证和授权的框架。与所有Spring项目一样，Spring Security的真正强大之处在于它可以轻松扩展以满足自定义要求。
+**二、项目背景**
+	公司的业务越来越复杂，随着业务的扩展需要将现有单个后端web系统进行拆分，并在同为顶级域名的多个web系统之间实现单点登录及权限控制，同时也为以后的服务集群部署做准备。
 
-**项目完整功能：**
- 1. 登录（根据所登录用户所具有的权限返回给前端JSON数据，动态的展示功能菜单）。
- 2. 注销。
- 3. 动态拦截url请求，根据当前登录用户所具有的权限，进行权限认证（防止不具有权限的用户直接通过url请求功能）。    
- 4. 用户管理模块（查询所有用户[分页加模糊查询]、新增用户、修改用户、删除用户、为用户分配角色）。
- 5. 角色管理模块（查询所有角色[分页加模糊查询]、新增角色、修改角色、删除角色、为角色分配可访问的资源菜单）。
- 6. 菜单管理模块（查询所有菜单、新增菜单、修改菜单、删除菜单）。
- 7. 登录验证中增加额外数据（如ip地址，mac地址，验证码等）。
+**三、实现方式及效果**
+实现的方式：基于现有的完整权限控制项目，之前整理过的一篇博文 [**前后端分离 SpringBoot整合SpringSecurity权限控制（动态拦截url）**](https://blog.csdn.net/weixin_39792935/article/details/84541194)，在此基础之上引入JWT实现单点登录。
+实现的效果：
 
-maven依赖：
+ - 用户不带token访问系统B，系统B响应状态码401（需要认证）
+ - 用户登录系统A，系统A校验用户名密码成功，生成并响应token及状态码200
+ - 用户没有登录系统B而是携带系统A响应的token去访问系统B
+ - 系统B解析token并进行权限校验，无权限访问资源则响应403（权限不足），权限验证成功则响应正常的json数据
+ - 访问系统C、系统D或分布式集群亦是如此
+
+**maven依赖：**
+
 ```java
-	<dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        
+		<dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
         </dependency>
 ```
 
 
-跳转: [**WebSecurityConfigure.java**](https://github.com/TianShengBingFeiNiuRen/SpringBoot_SpringSecurity/blob/master/src/main/java/com/nonce/restsecurity/config/WebSecurityConfigure.java)
+跳转: [**WebSecurityConfigure.java**](https://github.com/TianShengBingFeiNiuRen/SpringBoot_SpringSecurity_JWT/blob/master/src/main/java/com/nonce/restsecurity/config/WebSecurityConfigure.java)
 
-**CSDN**: [**link**](https://blog.csdn.net/weixin_39792935/article/details/84541194).
+**CSDN**: [**link**](https://blog.csdn.net/weixin_39792935/article/details/103528008).
