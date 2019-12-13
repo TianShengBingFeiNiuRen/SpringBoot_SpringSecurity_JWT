@@ -1,4 +1,4 @@
-# SpringBoot整合SpringSecurity+JWT实现单点的登录
+# SpringBoot整合SpringSecurity+JWT实现单点登录
 
 **一、JSON Web Token（JWT）**
 > 官方解释：JSON Web Token（JWT）是一个开放标准（RFC 7519），它定义了一种紧凑且自包含的方式，用于在各方之间作为JSON对象安全地传输信息。由于此信息是经过数字签名的，因此可以被验证和信任。可以使用秘密（使用HMAC算法）或使用RSA或ECDSA的公钥/私钥对对JWT进行签名。
