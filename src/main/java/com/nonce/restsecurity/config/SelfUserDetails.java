@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * @author Andon
  * @date 2019/3/20
- *
+ * <p>
  * 自定义UserDetails
  */
 public class SelfUserDetails implements UserDetails, Serializable {
