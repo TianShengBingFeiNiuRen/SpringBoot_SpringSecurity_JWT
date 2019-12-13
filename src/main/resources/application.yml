@@ -1,16 +1,16 @@
 server:
   port: 8018
-  servlet:
-    session:
-      timeout: 6h
+#  servlet:
+#    session:
+#      timeout: 6h
 
 spring:
-#  main:
-#    web-application-type: none
-#  security:
-#    user:
-#      name: security_admin #设置默认登录用户名
-#      password: security_admin #设置默认登录密码 不设置会在控制台打印出，默认用户名是user
+  #  main:
+  #    web-application-type: none
+  #  security:
+  #    user:
+  #      name: security_admin #设置默认登录用户名
+  #      password: security_admin #设置默认登录密码 不设置会在控制台打印出，默认用户名是user
   datasource:
     url: ######:3306/block?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2b8&autoReconnect=true&failOverReadOnly=false
     username: ######
@@ -32,3 +32,9 @@ spring:
       ddl-auto: none
     database: mysql
     open-in-view: true
+
+jwt:
+  token-header-key: Authorization
+  token-prefix: NonceToken
+  token-expiration: 21600000 #6*60*60*1000 6小时
+  token-secret: NonceJwtSecret

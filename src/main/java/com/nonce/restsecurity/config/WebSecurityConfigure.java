@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
 import javax.annotation.Resource;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Andon
- * @date 2019/3/20
+ * @date 2019/12/13
  * <p>
  * 登录拦截全局配置
  */
@@ -27,7 +28,7 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
     private UrlAuthenticationEntryPoint authenticationEntryPoint; //自定义未登录时：返回状态码401
 
     @Resource
-    private UrlAuthenticationSuccessHandler authenticationSuccessHandler; //自定义登录成功处理器：返回状态码200
+    private UrlAuthenticationSuccessHandler authenticationSuccessHandler; //自定义登录成功处理器并生成token：响应状态码200及token
 
     @Resource
     private UrlAuthenticationFailureHandler authenticationFailureHandler; //自定义登录失败处理器：返回状态码402
@@ -50,6 +51,9 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
     @Resource
     private AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> authenticationDetailsSource; //身份验证详细信息源
 
+    @Resource
+    private JwtAuthorizationTokenFilter authorizationTokenFilter; //JwtToken解析并生成authentication身份信息过滤器
+
     @Override
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers("/common/**"); //无条件允许访问
@@ -65,6 +69,9 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
 
         // 关闭csrf验证(防止跨站请求伪造攻击)
         http.csrf().disable();
+
+        // JwtToken解析并生成authentication身份信息过滤器
+        http.addFilterBefore(authorizationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
         // 未登录时：返回状态码401
         http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
@@ -87,8 +94,8 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
                     }
                 });
 
-        // 将session策略设置为无状态的,通过token进行权限认证
-//        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        // 将session策略设置为无状态的,通过token进行登录认证
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         // 开启自动配置的登录功能
         http.formLogin() //开启登录
@@ -97,7 +104,7 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
                 .usernameParameter("username").passwordParameter("password") //自定义登录用户名密码属性名,默认为username和password
 //                .successForwardUrl("/index") //登录成功后的url(post,前后端不分离)
 //                .failureForwardUrl("/error") //登录失败后的url(post,前后端不分离)
-                .successHandler(authenticationSuccessHandler) //验证成功处理器(前后端分离)：返回状态码200
+                .successHandler(authenticationSuccessHandler) //验证成功处理器(前后端分离)：生成token及响应状态码200
                 .failureHandler(authenticationFailureHandler) //验证失败处理器(前后端分离)：返回状态码402
                 .authenticationDetailsSource(authenticationDetailsSource); //身份验证详细信息源(登录验证中增加额外字段)
 
