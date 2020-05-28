@@ -36,7 +36,7 @@ public class UrlAuthenticationSuccessHandler implements AuthenticationSuccessHan
     @Value("${jwt.token-secret}")
     private String tokenSecret; //token秘钥
     @Value("${jwt.token-expiration}")
-    private Long tokenExpiration; //token过期时间
+    private String tokenExpiration; //token过期时间
     @Resource
     private UserService userService;
 
@@ -59,7 +59,7 @@ public class UrlAuthenticationSuccessHandler implements AuthenticationSuccessHan
         String token = Jwts.builder()
                 .setClaims(claims)
                 .setSubject(username) //设置用户名
-                .setExpiration(new Date(System.currentTimeMillis() + tokenExpiration)) //设置token过期时间
+                .setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(tokenExpiration))) //设置token过期时间
                 .signWith(SignatureAlgorithm.HS512, tokenSecret).compact(); //设置token签名算法及秘钥
         httpServletResponse.addHeader(tokenHeaderKey, tokenPrefix + " " + token); //设置token响应头
 
