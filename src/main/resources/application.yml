@@ -36,5 +36,5 @@ spring:
 jwt:
   token-header-key: Authorization
   token-prefix: NonceToken
-  token-expiration: 21600000 #6*60*60*1000 6小时
+  token-expiration: 43200000 #12*60*60*1000 12小时
   token-secret: NonceJwtSecret
