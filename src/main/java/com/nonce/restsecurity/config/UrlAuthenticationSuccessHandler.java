@@ -63,6 +63,8 @@ public class UrlAuthenticationSuccessHandler implements AuthenticationSuccessHan
                 .signWith(SignatureAlgorithm.HS512, tokenSecret).compact(); //设置token签名算法及秘钥
         httpServletResponse.addHeader(tokenHeaderKey, tokenPrefix + " " + token); //设置token响应头
 
+        httpServletResponse.setCharacterEncoding("UTF-8");
+        httpServletResponse.setContentType("text/html;charset=UTF-8");
         httpServletResponse.getWriter().write(GsonUtil.GSON.toJson(response));
     }
 }
