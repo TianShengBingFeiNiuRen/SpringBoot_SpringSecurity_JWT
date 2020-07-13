@@ -35,12 +35,8 @@ public class SelfAccessDecisionManager implements AccessDecisionManager {
         for (ConfigAttribute configAttribute : collection) {
             // 当前请求需要的权限
             String needRole = configAttribute.getAttribute();
-            if ("ROLE_LOGIN".equals(needRole)) {
-                if (authentication instanceof AnonymousAuthenticationToken) {
-                    throw new BadCredentialsException("Not logged in!!");
-                } else {
-                    return;
-                }
+            if ("ROLE_WRONG".equals(needRole)) {
+                throw new BadCredentialsException("Wrong path!!!!");
             }
             // 当前用户所具有的权限
             for (GrantedAuthority grantedAuthority : authorities) {

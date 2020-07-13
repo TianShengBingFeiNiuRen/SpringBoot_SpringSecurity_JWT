@@ -49,7 +49,7 @@ public class SelfFilterInvocationSecurityMetadataSource implements FilterInvocat
             }
         }
         if (ObjectUtils.isEmpty(set)) {
-            return SecurityConfig.createList("ROLE_LOGIN");
+            return SecurityConfig.createList("ROLE_WRONG");
         }
         return set;
     }
