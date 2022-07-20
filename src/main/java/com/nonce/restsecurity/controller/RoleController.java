@@ -20,7 +20,7 @@ import java.util.Map;
  * 角色管理
  */
 @RestController
-@RequestMapping(value = "/security")
+@RequestMapping(value = "/security-manage")
 public class RoleController {
 
     private static final Logger LOG = LoggerFactory.getLogger(RoleController.class);
@@ -31,7 +31,7 @@ public class RoleController {
     /**
      * 新增角色信息 角色名称(必须以ROLE_起始命名)
      */
-    @PostMapping(value = "/role/add")
+    @PostMapping(value = "/role-manage/add")
     public SecurityResponse add(String roleName, String roleNameCN, String remark) {
         try {
             if (!ObjectUtils.isEmpty(roleName) && !ObjectUtils.isEmpty(roleNameCN)) {
@@ -55,7 +55,7 @@ public class RoleController {
     /**
      * 为角色分配可访问的资源菜单 (批量菜单id:逗号分隔)
      */
-    @PostMapping(value = "/role/addMenus")
+    @PostMapping(value = "/role-manage/addMenus")
     public SecurityResponse addRolesForUser(String roleId, String menuId) {
         try {
             if (!ObjectUtils.isEmpty(roleId) && !ObjectUtils.isEmpty(menuId)) {
@@ -74,7 +74,7 @@ public class RoleController {
     /**
      * 删除角色信息 (批量删除id 逗号分隔)
      */
-    @PostMapping(value = "/role/delete")
+    @PostMapping(value = "/role-manage/delete")
     public SecurityResponse delete(String id) {
         try {
             if (!ObjectUtils.isEmpty(id)) {
@@ -92,7 +92,7 @@ public class RoleController {
     /**
      * 修改角色信息
      */
-    @PostMapping(value = "/role/update")
+    @PostMapping(value = "/role-manage/update")
     public SecurityResponse update(String id, String roleName, String roleNameCN, String remark) {
         try {
             if (!ObjectUtils.isEmpty(id) && !ObjectUtils.isEmpty(roleName) && !ObjectUtils.isEmpty(roleNameCN)) {
@@ -115,7 +115,7 @@ public class RoleController {
     /**
      * 获取所有角色信息 (分页加模糊查询)
      */
-    @PostMapping(value = "/role/findAll")
+    @PostMapping(value = "/role-manage/findAll")
     public SecurityResponse findAll(String pageNum, String pageSize, String roleNameCN) {
         try {
             if (!ObjectUtils.isEmpty(pageNum) && !ObjectUtils.isEmpty(pageSize)) {
