@@ -12,9 +12,9 @@ spring:
 #      name: security_admin #设置默认登录用户名
 #      password: security_admin #设置默认登录密码 不设置会在控制台打印出，默认用户名是user
   datasource:
-    url: jdbc:mysql://######:3306/block?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2b8&autoReconnect=true&failOverReadOnly=false
-    username: ######
-    password: ######
+    url: jdbc:mysql://####:3306/test_security?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2b8&autoReconnect=true&failOverReadOnly=false
+    username: ####
+    password: ####
     driver-class-name: com.mysql.jdbc.Driver
     hikari:
       read-only: false
@@ -32,6 +32,23 @@ spring:
       ddl-auto: none
     database: mysql
     open-in-view: true
+  flyway:
+    # 是否启用flyway
+    enabled: true
+    # 编码格式，默认UTF-8
+    encoding: UTF-8
+    # 迁移sql脚本文件存放路径，默认db/migration
+    locations: classpath:db/migration
+    # 迁移sql脚本文件名称的前缀，默认V
+    sql-migration-prefix: V
+    # 迁移sql脚本文件名称的分隔符，默认2个下划线__
+    sql-migration-separator: __
+    # 迁移sql脚本文件名称的后缀
+    sql-migration-suffixes: sql
+    # 迁移时是否进行校验，默认true
+    validate-on-migrate: true
+    # 当迁移发现数据库非空且存在没有元数据的表时，自动执行基准迁移，新建schema_version表
+    baseline-on-migrate: true
 
 jwt:
   token-header-key: Authorization
