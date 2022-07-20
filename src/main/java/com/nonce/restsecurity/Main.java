@@ -45,7 +45,7 @@ public class Main implements ApplicationRunner {
             authorityUserRepository.addRoleInfo("ROLE_ADMIN", "超级管理员", updateTime, "超级管理员");
             authorityUserRepository.addMenuInfo("/security-manage/user-manage/**", "用户管理", "0", updateTime, "用户管理", "/security-manage/user-manage");
             authorityUserRepository.addMenuInfo("/security-manage/role-manage/**", "角色管理", "0", updateTime, "角色管理", "/security-manage/role-manage");
-            authorityUserRepository.addMenuInfo("/security-manage/menu-manage/**", "菜单管理", "0", updateTime, "菜单管理", "/security-manage/menu-manage");
+            authorityUserRepository.addMenuInfo("/security-manage/resource-manage/**", "菜单管理", "0", updateTime, "菜单管理", "/security-manage/resource-manage");
 
             List<Map<String, Object>> userInfos = authorityUserRepository.findAllUserInfo(0, 10, adminUsername, "");
             List<Map<String, Object>> roleInfos = authorityUserRepository.findAllRoleInfo(0, 10, "超级管理员");
