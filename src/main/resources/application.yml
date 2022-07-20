@@ -15,13 +15,13 @@ spring:
     url: jdbc:mysql://####:3306/test_security?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2b8&autoReconnect=true&failOverReadOnly=false
     username: ####
     password: ####
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       read-only: false
       connection-timeout: 60000
       idle-timeout: 60000
       validation-timeout: 3000
-      max-lifetime: 60000
+      max-lifetime: 180000
       login-timeout: 5
       maximum-pool-size: 60
       minimum-idle: 10
